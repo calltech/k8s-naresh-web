@@ -16,9 +16,9 @@ Run the following comand in gcloud cli inside the console.
   - gcloud container clusters get-credentials multi-cluster
 # use the following command to create Secret password on the deployment server for postgres database:
 ---->> kubectl create secret generic pgpassword  --from-literal PGPASSWORD=somep@ssword123
-# The above command has to be run on the deployment server.
+# The above command must run on the deployment server/ cluster or vm etc.
 # Use the following command to see the secret
-# ----- >> kubectl get secret 
+# ----- >> kubectl get secret
 *******************************************************************************
 
 ******************************************************************************
