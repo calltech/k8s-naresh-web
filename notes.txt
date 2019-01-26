@@ -18,4 +18,42 @@
 *******************************************************************************
 
 ******************************************************************************
-Goto gcloud console and cerate a service account. 
+1: Goto gcloud console and cerate a service account and download the key JSON.
+
+2: We need to download and install Travis CLI to encrypt and upload the JSON key from the cgloud service account and upload it our Travis CI account.
+
+3: To install Travis CLI we need to have Ruby installed on our machine. Installing Ruby on windows in a pain in the rear so we have to come up with a different approach.
+
+4: We need Ruby and Travis CLI to run one command and then just throw it away so why not run a docker container our machine with ruby and Travis CLI instal on it. Once we are done with encryption of JSON key then delete the docker container.
+
+5: So to run a docker container with ruby installed on it, I did the following: make sure to change directory to your current project directory.
+
+docker run -it -v ${pwd}:/app ruby:2.3 sh 
+the above command mount the present working directory into /app directory in our newley created docker container.
+
+6: Install travis in docker container.
+gem install travis
+
+
+7: Login to travis CLI 
+travis login 
+
+8: enter github credentials to login into travis CLI.
+
+9: Encrypt the JSON file.
+travis encrypt-file name-of-file.json 
+
+10: you will see a message like this: 
+
+Please add the following to your build script (before_install stage in your .travis.yml, for instance):
+
+    openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in naresh-app.json.enc -out naresh-app.json -d
+
+
+
+11: Done! 
+
+
+12: Dont forget to delete the orignal JSON key file. 
+
+
