@@ -1,0 +1,10 @@
+apiVersion: v1
+kind: PresistentVolumeClaim
+metadata:
+  name: database-presistent-volume-claim
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi

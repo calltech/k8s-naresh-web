@@ -1,0 +1,19 @@
+#Setting up Ingress locally
+# github.com/kubernetes/ingress-nginx
+# http://kubernetes.github.io/ingress-nginx/deploy
+# Generic Deployment
+
+#https://kubernetes.github.io/ingress-nginx/deploy/#prerequisite-generic-deployment-command
+
+# Mandatory command to run locally
+# kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/master/deploy/mandatory.yaml
+
+
+******************************************************************************
+# use the following command to create Secret password on the deployment server for postgres database:
+---->> kubectl create secret generic pgpassword  --from-literal PGPASSWORD=1234abcdf
+# The above command has to be run on the deployment server.
+# Use the following command to see the secret
+# ----- >> kubectl get secret 
+*******************************************************************************
+
