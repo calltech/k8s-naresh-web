@@ -1,3 +1,4 @@
+language: java
 sudo: required
 services:
   - docker
@@ -12,17 +13,23 @@ before_install:
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file service-account.json
   # Read note.txt file  for details on how to create a Services account, Download Services acount in json file etc.
-  - gcloud config set project my-web-app
+  - gcloud config set project naresh-app-229804 
   - gcloud config set compute/zone us-central1-a
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t programmer26/react-test -f ./client/Dockerfile.dev ./client
+  - docker build -t programmer26/naresh-web -f ./client/Dockerfile ./client
+    ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+    ./mvnw test -B
+
 
 script:
-  - docker run programmer26/react-test npm test -- --coverage
+  #- jdk_switcher use oraclejdk8
+  - # do stuff with Java 8
+  - jdk_switcher use openjdk8
+  - # do stuff with open Java 8
 
 deploy:
   provider: script
-  script: bash ./deploy.sh
+  script: bash ./build.sh
   on:
 branch: master

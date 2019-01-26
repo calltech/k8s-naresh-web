@@ -11,7 +11,7 @@
 
 ******************************************************************************
 # use the following command to create Secret password on the deployment server for postgres database:
----->> kubectl create secret generic pgpassword  --from-literal PGPASSWORD=1234abcdf
+---->> kubectl create secret generic pgpassword  --from-literal PGPASSWORD=somep@ssword123
 # The above command has to be run on the deployment server.
 # Use the following command to see the secret
 # ----- >> kubectl get secret 
@@ -44,7 +44,6 @@ travis login
 travis encrypt-file name-of-file.json 
 
 10: you will see a message like this: 
-
 Please add the following to your build script (before_install stage in your .travis.yml, for instance):
 
     openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in naresh-app.json.enc -out naresh-app.json -d
@@ -57,3 +56,6 @@ Please add the following to your build script (before_install stage in your .tra
 12: Dont forget to delete the orignal JSON key file. 
 
 
+*********************************************************************
+
+1: Login to Docker CLI 
