@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: programmer26/some-image-name
+          image: programmer26/multi-client
           ports:
             - containerPort: 3000
           env:

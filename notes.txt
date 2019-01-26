@@ -63,3 +63,29 @@ Please add the following to your build script (before_install stage in your .tra
 *********************************************************************
 
 1: Login to Docker CLI 
+
+
+
+
+
+
+
+
+
+***************************************************************
+
+install Helm 
+
+Create service acccount in kube-system namespace and assign admin role to it using the following command 
+
+kubectl create serviceaccount --namespace kube-system tiller
+
+kubectl create clusterrolebinding tiller-cluster-rule --clusterrole=cluster-admin --serviceaccount=kube-system:tiller
+
+helm init --service-account tiller --upgrade
+
+:::: Now we can use Helm to install Nginx ingress on our cluster.
+
+helm install stable/nginx-ingress --name my-nginx --set rbac.create=true
+
+
