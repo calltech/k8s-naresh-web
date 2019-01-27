@@ -3,15 +3,15 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'com.netflix.nebula:gradle-contacts-plugin:3.+'
-        classpath 'com.netflix.nebula:gradle-info-plugin:3.+'
+        classpath 'com.netflix.nebula:gradle-contacts-plugin:5.+'
+        classpath 'com.netflix.nebula:gradle-info-plugin:5.+'
         classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.+'
 //        classpath 'com.netflix.nebula:nebula-release-plugin:6.+'
     }
 }
 
 plugins {
-    id 'org.liquibase.gradle' version '1.2.4'
+    id 'org.liquibase.gradle' version '2.0.1'
     id 'com.github.ben-manes.versions' version '0.17.0'
     id 'io.spring.dependency-management' version '1.0.5.RELEASE'
     id 'org.sonarqube' version '2.6.2'
@@ -24,6 +24,7 @@ plugins {
 apply plugin: 'nebula.contacts'
 apply plugin: 'nebula.info'
 apply plugin: 'nebula.ospackage'
+apply plugin: 'org.liquibase.gradle'
 //apply plugin: 'nebula.release'
 
 contacts {

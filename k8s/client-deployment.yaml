@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: client
-          image: programmer26/multi-client
+          image: programmer26/naresh-web-dep-0.0v
           ports:
             - containerPort: 8080
           env:
