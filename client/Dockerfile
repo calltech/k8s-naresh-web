@@ -1,5 +1,4 @@
 FROM openjdk:8
-WORKDIR '/app'
-COPY client-0.0.1-SNAPSHOT.jar /app.jar
+COPY k8s-naresh-web*.jar /app.jar
 EXPOSE 8080/tcp
 ENTRYPOINT ["java", "-jar", "/app.jar"]
