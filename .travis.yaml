@@ -22,15 +22,9 @@ before_install:
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t programmer26/naresh-web -f ./client/Dockerfile ./client
-  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-  - ./mvnw test -B
 
 
 script:
-  #- jdk_switcher use oraclejdk8
-  - # do stuff with Java 8
-  #- jdk_switcher use openjdk8
-  - # do stuff with open Java 8
   - ./gradlew clean cleanTest test --info
 
 deploy:
