@@ -16,7 +16,7 @@ spec:
         - name: client
           image: programmer26/multi-client
           ports:
-            - containerPort: 3000
+            - containerPort: 8080
           env:
              - name: PGUSER
                value: postgres

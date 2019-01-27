@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
+    <data-source source="LOCAL" name="PostgreSQL - elections@localhost" uuid="518c1074-491c-4488-ba2f-d37b12307444">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://localhost:5432/elections</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="dewyicib@stampy.db.elephantsql.com" uuid="f4ecc9f2-6aeb-4930-9974-6359ca6d2d13">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://stampy.db.elephantsql.com:5432/dewyicib</jdbc-url>
+    </data-source>
+    <data-source source="LOCAL" name="elections_dev@elections-dev.cldzl4hunvry.us-east-1.rds.amazonaws.com" uuid="2f55600b-b96f-4d69-9032-ceed21273723">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://elections-dev.cldzl4hunvry.us-east-1.rds.amazonaws.com:5432/elections_dev</jdbc-url>
+    </data-source>
+  </component>
+</project>

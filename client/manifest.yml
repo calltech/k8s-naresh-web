@@ -1,0 +1,15 @@
+---
+applications:
+- name: pcf-postgresql-demo
+  memory: 1GB
+  instances: 1
+  random-route: true
+  buildpack: java_buildpack
+  path: build/libs/spring-postgresql-demo-2.0.0.jar
+  env:
+    SPRING_PROFILES_ACTIVE: test
+    SPRING_DATABASE_URL: <postgresql_url_here>
+    SPRING_DATASOURCE_USERNAME: <postgresql_username_here>
+    SPRING_DATASOURCE_PASSWORD: <postgresql_password_here>
+  services:
+    - elections

@@ -1,0 +1,137 @@
+buildscript {
+    repositories {
+        jcenter()
+    }
+    dependencies {
+        classpath 'com.netflix.nebula:gradle-contacts-plugin:3.+'
+        classpath 'com.netflix.nebula:gradle-info-plugin:3.+'
+        classpath 'com.netflix.nebula:gradle-ospackage-plugin:4.+'
+//        classpath 'com.netflix.nebula:nebula-release-plugin:6.+'
+    }
+}
+
+plugins {
+    id 'org.liquibase.gradle' version '1.2.4'
+    id 'com.github.ben-manes.versions' version '0.17.0'
+    id 'io.spring.dependency-management' version '1.0.5.RELEASE'
+    id 'org.sonarqube' version '2.6.2'
+    id 'org.springframework.boot' version '2.0.2.RELEASE'
+    id 'eclipse'
+    id 'idea'
+    id 'java'
+}
+
+apply plugin: 'nebula.contacts'
+apply plugin: 'nebula.info'
+apply plugin: 'nebula.ospackage'
+//apply plugin: 'nebula.release'
+
+contacts {
+    'garystafford@rochester.rr.com' {
+        moniker 'Gary A. Stafford'
+        github 'garystafford'
+        twitter 'garystafford'
+        role 'owner'
+    }
+}
+
+task printJarProperties {
+    description 'Prints all jar properties.'
+
+    doLast {
+        jar.properties.each { prop, val ->
+            print prop + ': ' + val + '\n'
+        }
+    }
+}
+
+task printProjectProperties {
+    description 'Prints all project properties.'
+
+    doLast {
+        project.properties.each { prop, val ->
+            print prop + ': ' + val + '\n'
+        }
+    }
+}
+
+// Override nebula.release opinions on building/tagging for now
+def major = '4'
+def minor = '5'
+def patch = System.env.BUILD_NUMBER ?: '0'
+def artifact_version = major + '.' + minor + '.' + patch
+version = artifact_version
+
+bootJar { // creates fully executable archives
+    launchScript()
+}
+
+task packDeb(type: Deb) {
+    description 'Creates .deb package.'
+
+    into '/opt/' + project.name // root directory
+
+    from(jar.outputs.files) { // copy *.jar
+        into 'lib'
+        fileMode 0500
+        user 'springapp'
+        permissionGroup 'springapp'
+    }
+
+    from('build/resources/main/' + project.name + '.conf') { // copy .conf
+        into 'conf'
+        fileMode 0400
+        user 'root'
+        permissionGroup 'root'
+    }
+
+    // symlinks jar to init.d
+    link('/etc/init.d/election',
+            '/opt/' + project.name + '/lib/' + jar.archiveName)
+
+    // link init.d to rc2.d
+    link('/opt/' + project.name + '/lib/' + project.name + '-' + project.version + '.conf',
+            '/opt/' + project.name + '/conf/' + project.name + '.conf')
+
+    // link conf to jar location
+    link('/etc/rc2.d/S02election', '/etc/init.d/election')
+
+    postInstall 'chattr +i ' + '/opt/' + project.name + '/lib/' + jar.archiveName
+}
+
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    jcenter()
+}
+
+ext {
+    springBootVersion = '2.0.2.RELEASE'
+    springFoxVersion = '2.9.0'
+}
+
+dependencies {
+    compile('com.h2database:h2:1.4.197')
+    compile("io.springfox:springfox-swagger-ui:${springFoxVersion}")
+    compile("io.springfox:springfox-data-rest:${springFoxVersion}")
+    compile("io.springfox:springfox-swagger2:${springFoxVersion}")
+    compile("org.liquibase:liquibase-core:3.6.1")
+    compile("org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:2.6.2")
+    compile("org.springframework.boot:spring-boot-starter-actuator:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-jpa:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-data-rest:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-hateoas:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-web:${springBootVersion}")
+    compileOnly("org.projectlombok:lombok:1.16.20")
+    runtime("org.postgresql:postgresql:42.2.2")
+    testCompile("org.springframework.boot:spring-boot-starter-test:${springBootVersion}")
+    testCompile("org.assertj:assertj-core:3.10.0")
+}
+
+test {
+    testLogging {
+        events 'passed', 'skipped', 'failed', 'standardOut', 'standardError'
+        exceptionFormat 'full'
+    }
+}
