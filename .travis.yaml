@@ -2,7 +2,6 @@ sudo: required
 install: gradle wrapper
 language: java
 jdk: oraclejdk8
-
 services:
   - docker
 env:
@@ -10,7 +9,7 @@ env:
     - SHA=$(git rev-parse HEAD)
     - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
-  -  openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in naresh-app.json.enc -out naresh-app.json -d
+  - openssl aes-256-cbc -K $encrypted_0c35eebf403c_key -iv $encrypted_0c35eebf403c_iv -in naresh-app.json.enc -out naresh-app.json -d
   - curl https://sdk.cloud.google.com | bash > /dev/null;
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
@@ -23,14 +22,14 @@ before_install:
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
   - docker build -t programmer26/naresh-web -f ./client/Dockerfile ./client
-    ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
-    ./mvnw test -B
+  - ./mvnw install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+  - ./mvnw test -B
 
 
 script:
   #- jdk_switcher use oraclejdk8
   - # do stuff with Java 8
-  - jdk_switcher use openjdk8
+  #- jdk_switcher use openjdk8
   - # do stuff with open Java 8
   - ./gradlew clean cleanTest test --info
 
