@@ -20,7 +20,7 @@ before_install:
   - gcloud config set compute/zone us-central1-a
   - gcloud container clusters get-credentials multi-cluster
   - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
-  - docker build -t programmer26/naresh-web -f ./client/Dockerfile ./client
+  - docker build -t programmer26/naresh-web -f ./spring-postgresql-demo/Dockerfile ./spring-postgresql-demo
 
 
 script:
